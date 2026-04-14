@@ -6,9 +6,7 @@ import {
   CheckCircle2,
   LayoutTemplate,
   MessageSquare,
-  PenTool,
   Rocket,
-  Send,
   Target,
   User,
   Video,
@@ -457,14 +455,15 @@ export default function CeoEraApp() {
               >
                 OSINT PROFILE: {tiktokId}
               </p>
+              {/* Epiphany moment font size reduced significantly */}
               <h2
                 style={{
-                  fontSize: "2rem",
-                  fontWeight: 900,
+                  fontSize: "1.3rem",
+                  fontWeight: 800,
                   color: "#f8fafc",
                   margin: 0,
-                  lineHeight: 1.2,
-                  letterSpacing: "-0.03em",
+                  lineHeight: 1.4,
+                  letterSpacing: "-0.01em",
                 }}
               >
                 {blueprint.epiphanyMoment}
