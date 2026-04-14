@@ -115,14 +115,14 @@ export async function POST(req: Request) {
         instaData.status === "fulfilled" ? instaData.value : { active: false },
     };
 
-    // --- AI ACTION PLAN ENGINE ---
+    // --- FOUNDERPAL-STYLE AUTOMATION ENGINE ---
     const result = await generateObject({
       model: google("gemini-2.5-flash"),
       schema: z.object({
         epiphanyMoment: z
           .string()
           .describe(
-            "A harsh but highly empathetic 1-sentence wake-up call to stop consuming and start creating based on their vibe. E.g., 'You spend 4 hours a day curating outfits on TikTok. People will literally pay you $15 for that taste.'",
+            "A hype-driven, highly relatable 1-sentence wake-up call based on their vibe. E.g., 'You spend 4 hours a day curating outfits on TikTok. People will literally pay you $15 for that taste.'",
           ),
         businessName: z
           .string()
@@ -132,15 +132,20 @@ export async function POST(req: Request) {
           .describe(
             "EXACTLY what the digital product is. E.g., 'A 10-page Notion template organizing minimalist capsule wardrobes.'",
           ),
-        pricingStrategy: z
+        targetPersona: z
           .string()
           .describe(
-            "Exact pricing model. E.g., 'Free lead magnet -> $19 premium template upsell.'",
+            "The exact target audience they are selling to. E.g., 'Stressed-out college girls who want to look put-together with zero effort.'",
           ),
-        billionaireMuse: z
+        landingPageHeadline: z
           .string()
           .describe(
-            "The mega-creator strategy applied (e.g., 'Kylie Jenner Scarcity', 'MrBeast Retention', 'Emma Chamberlain Vulnerability').",
+            "A high-converting H1 headline for their Stan Store / Carrd landing page. E.g., 'Steal the exact Wardrobe OS that takes me 5 mins to dress every morning.'",
+          ),
+        firstViralHook: z
+          .string()
+          .describe(
+            "A 3-second text hook for their first TikTok/Reels video to promote this. E.g., 'POV: You stopped trying to be trendy and just built a system.'",
           ),
         actionPlanPhase1: z
           .string()
@@ -152,22 +157,16 @@ export async function POST(req: Request) {
           .describe(
             "Phase 2 (Day 4-14) Traffic: How to get eyes on it using their existing social media habits. E.g., 'Post 7-second POV TikToks showing your messy room vs. your organized Notion template.'",
           ),
-        actionPlanPhase3: z
-          .string()
-          .describe(
-            "Phase 3 (Scale): How to make it passive income. E.g., 'Set up an automated Stan Store email sequence.'",
-          ),
       }),
-      prompt: `You are an elite, highly pragmatic Startup Advisor and OSINT Analyst for Gen Z creators.
+      prompt: `You are an elite Startup Advisor and OSINT Analyst acting like a Gen Z "FounderPal" — a brilliant, automated marketing team for solopreneurs.
       Analyze this multi-platform raw data extracted for the target ID "${cleanHandle}":
       ${JSON.stringify(digitalFootprint, null, 2)}
       
-      CRITICAL INSTRUCTIONS:
-      1. SKIP THE FLUFF. We are building an ACTION PLAN. Focus purely on WHAT to build, HOW to price it, and HOW to execute it.
+      CRITICAL INSTRUCTIONS (FounderPal Core Value):
+      1. We don't just give them a generic business idea. We do the heavy lifting FOR them. We define their customer, write their landing page copy, and script their first viral video.
       2. If the data is empty, deeply analyze the username itself to invent a hyper-niche archetype.
-      3. The business MUST be a high-margin digital product (e.g., Notion template, curated list, Discord community, ebook, aesthetic presets) that requires ZERO upfront cost.
-      4. Incorporate a specific Billionaire/Mega-Creator strategy as the marketing angle.
-      5. Tone: Pragmatic, direct, hype-driven, and highly structured. Speak like a smart tech-founder giving advice over iMessage. Use terms like 'funnel', 'lead magnet', 'conversion'.`,
+      3. The business MUST be a high-margin digital product (e.g., Notion template, curated list, Discord community, ebook) that requires ZERO upfront cost.
+      4. Tone: Pragmatic, incredibly supportive, and direct. Speak like a smart tech-founder who is doing the work FOR them so they just have to click 'publish'. Use terms like 'funnel', 'conversion', and 'viral hook' but keep it Gen Z friendly.`,
     });
 
     return NextResponse.json(result.object);
