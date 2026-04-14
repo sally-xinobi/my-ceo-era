@@ -116,6 +116,7 @@ export default function CeoEraApp() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
+          blueprint,
         }),
       });
 
