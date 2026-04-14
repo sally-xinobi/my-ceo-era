@@ -2,9 +2,7 @@ import { NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { z } from "zod";
-import * as cheerio from "cheerio";
 
-// Ensure you have OPENAI_API_KEY in your .env.local
 const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,35 +10,47 @@ const openai = createOpenAI({
 export async function POST(req: Request) {
   try {
     const { handle } = await req.json();
-    const cleanHandle = handle.startsWith("@") ? handle : `@${handle}`;
+    const cleanHandle = handle.replace("@", "");
 
-    // 1. 실제 TikTok 프로필 페이지 크롤링 (OSINT Extraction)
     let scrapedBio = "No public bio found.";
-    let scrapedTitle = "";
+    let stats = "No stats available.";
 
+    // 1. 오픈 API를 통한 TikTok 프로필 데이터 추출 시도 (틱봇 방어 우회)
+    // Tokcount API 사용 (서드파티 무료 통계 API)
     try {
-      const response = await fetch(`https://www.tiktok.com/${cleanHandle}`, {
+      const response = await fetch(`https://tokcount.com/?user=${cleanHandle}`, {
         headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          "Accept-Language": "en-US,en;q=0.9",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
         },
       });
 
       if (response.ok) {
         const html = await response.text();
-        const $ = cheerio.load(html);
         
-        // TikTok의 메타 태그에는 유저의 소개글(Bio)과 팔로워 통계가 포함되어 있습니다.
-        scrapedTitle = $("title").text() || "";
-        scrapedBio = $('meta[name="description"]').attr("content") || "No public bio found.";
-      } else {
-        console.warn(`Failed to fetch TikTok profile for ${cleanHandle}. Status: ${response.status}`);
+        // 정규식으로 Tokcount 페이지 내의 script 데이터 추출 시도
+        const followersMatch = html.match(/"followers":\s*(\d+)/);
+        const followingMatch = html.match(/"following":\s*(\d+)/);
+        const likesMatch = html.match(/"likes":\s*(\d+)/);
+        const bioMatch = html.match(/"signature":\s*"([^"]+)"/);
+
+        if (bioMatch && bioMatch[1]) {
+          // 이스케이프된 유니코드 텍스트 디코딩
+          scrapedBio = bioMatch[1].replace(/\\u[\dA-F]{4}/gi, 
+            function (match) {
+              return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+            }
+          );
+        }
+
+        if (followersMatch && likesMatch) {
+          stats = `Followers: ${followersMatch[1]}, Likes: ${likesMatch[1]}`;
+        }
       }
     } catch (scrapeError) {
       console.error("Scraping error:", scrapeError);
     }
 
-    // 2. 크롤링된 실제 데이터를 기반으로 AI 비즈니스 분석
+    // 2. 크롤링된 데이터를 바탕으로 AI 비즈니스 분석
     const result = await generateObject({
       model: openai("gpt-4o"),
       schema: z.object({
@@ -69,15 +79,15 @@ export async function POST(req: Request) {
           ),
       }),
       prompt: `Act as a hyper-intelligent, Gen-Z digital footprint analyst and business strategist. 
-      Analyze this real data extracted from the TikTok profile "${cleanHandle}":
+      Analyze this real data extracted from the TikTok profile "@${cleanHandle}":
       
-      Page Title: ${scrapedTitle}
-      Profile Bio & Stats: ${scrapedBio}
+      Extracted Bio: "${scrapedBio}"
+      Stats: "${stats}"
       
-      If the bio contains specific keywords (e.g., fitness, gaming, art, music, studying), structure the business EXACTLY around those real interests. 
-      If the bio is empty or generic, infer their vibe from the handle name and standard Gen Z archetypes.
+      CRITICAL INSTRUCTION: If the "Extracted Bio" contains any specific keywords, emojis, or clues (e.g., fitness, gaming, art, music, studying, links, quotes), you MUST structure the business EXACTLY around those real interests. NEVER output an empty vibe. 
+      If the bio is completely empty or "No public bio found", deeply analyze the username "${cleanHandle}" itself. What kind of person uses that username? Infer a hyper-specific Gen Z archetype from the name and invent a brilliant business for them.
       
-      Based on this REAL extracted data, create a highly specific, low-overhead digital business they could launch today. 
+      Based on this data, create a highly specific, low-overhead digital business they could launch today. 
       The business must perfectly match their aesthetic/vibe so it feels authentic to their followers.`,
     });
 
