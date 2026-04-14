@@ -12,7 +12,28 @@ import {
   Video,
   Zap,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+const CEO_STORIES = [
+  {
+    emoji: "🔥",
+    name: "Zach",
+    age: 17,
+    text: "Snapped a pic of food, turned it into a $30M app. Rejected by 15 colleges, made Forbes 30 Under 30.",
+  },
+  {
+    emoji: "💪",
+    name: "Ben",
+    age: 19,
+    text: "Delivered pizzas, sewed gym fits in his garage. One tracksuit went viral — now he's a billionaire.",
+  },
+  {
+    emoji: "🐝",
+    name: "Mikaila",
+    age: 4,
+    text: "Got stung by a bee, started a lemonade brand. Shark Tank at 9, 10M bottles sold by 20.",
+  },
+] as const;
 
 export default function CeoEraApp() {
   const [step, setStep] = useState<
@@ -32,6 +53,12 @@ export default function CeoEraApp() {
   const [isTyping, setIsTyping] = useState(false);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const weeklyStory = useMemo(() => {
+    const weekIndex =
+      Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % CEO_STORIES.length;
+    return CEO_STORIES[weekIndex];
+  }, []);
 
   const loadingSequence = [
     "Initializing OSINT Engine... 👁️",
@@ -259,6 +286,44 @@ export default function CeoEraApp() {
                 Drop your @handle. We scan your vibe and build your entire
                 marketing stack: Landing page copy, target persona, and viral
                 video scripts. <b style={{ color: "#cbd5e1" }}>Done for you.</b>
+              </p>
+            </div>
+
+            <div
+              style={{
+                padding: "16px",
+                background: "rgba(255, 255, 255, 0.03)",
+                borderRadius: "16px",
+                border: "1px solid rgba(255, 255, 255, 0.06)",
+                marginBottom: "20px",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0 0 4px 0",
+                  fontSize: "0.7rem",
+                  fontWeight: 800,
+                  color: "#64748b",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                CEO Story of the Week
+              </p>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: "0.95rem",
+                  color: "#cbd5e1",
+                  lineHeight: 1.5,
+                  fontWeight: 500,
+                }}
+              >
+                {weeklyStory.emoji}{" "}
+                <b style={{ color: "#f8fafc" }}>
+                  {weeklyStory.name}, {weeklyStory.age}.
+                </b>{" "}
+                {weeklyStory.text}
               </p>
             </div>
 
