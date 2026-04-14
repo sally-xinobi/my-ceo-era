@@ -11,7 +11,7 @@ import {
   User,
   Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CeoEraApp() {
   const [step, setStep] = useState<
@@ -29,6 +29,9 @@ export default function CeoEraApp() {
   );
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+
+  // 채팅 자동 스크롤을 위한 참조
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   const loadingSequence = [
     "Initializing OSINT Engine... 👁️",
@@ -54,6 +57,13 @@ export default function CeoEraApp() {
       return () => clearInterval(animationInterval);
     }
   }, [step]);
+
+  // 메시지가 추가되거나 타이핑 중일 때 자동으로 맨 아래로 스크롤
+  useEffect(() => {
+    if (step === "chat") {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isTyping, step]);
 
   const handleStart = async () => {
     if (!tiktokId.trim() || !tiktokId.startsWith("@")) {
@@ -85,7 +95,7 @@ export default function CeoEraApp() {
     } catch (error) {
       console.error(error);
       alert(
-        "Oops! The OSINT engine crashed. Make sure your OpenAI API key is set! 🔑",
+        "Oops! The OSINT engine crashed. Make sure your API key is set! 🔑",
       );
       setStep("onboarding");
     }
@@ -456,7 +466,6 @@ export default function CeoEraApp() {
               </h2>
             </div>
 
-            {/* Brutal Honesty Box */}
             <div
               style={{
                 backgroundColor: "rgba(30, 41, 59, 0.4)",
@@ -492,7 +501,6 @@ export default function CeoEraApp() {
               </p>
             </div>
 
-            {/* The Billionaire Muse Highlight */}
             <div
               style={{
                 background:
@@ -546,7 +554,6 @@ export default function CeoEraApp() {
               </p>
             </div>
 
-            {/* Blueprint Card */}
             <div
               style={{
                 backgroundColor: "rgba(15, 23, 42, 0.8)",
@@ -761,6 +768,7 @@ export default function CeoEraApp() {
               display: "flex",
               flexDirection: "column",
               backgroundColor: "#f8fafc",
+              overflow: "hidden",
             }}
           >
             <div
@@ -949,6 +957,8 @@ export default function CeoEraApp() {
                   </span>
                 </div>
               )}
+              {/* 스크롤을 맨 아래로 내리기 위한 보이지 않는 앵커 엘리먼트 */}
+              <div ref={chatEndRef} />
             </div>
 
             <div
