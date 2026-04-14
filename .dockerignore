@@ -1,0 +1,15 @@
+node_modules
+.next
+.git
+.gitignore
+.idea
+.env
+.env.*
+coverage
+.husky
+.pre-commit-config.yaml
+*.md
+e2e
+playwright.config.ts
+playwright-report
+test-results

@@ -1,0 +1,7 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: project-template-next-react
+spec:
+  hosts:
+    - project-template-next-react.xinobi.net

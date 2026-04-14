@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "No data yet",
+    "description": "Create your first item to get started.",
+    "create": "Create",
+    "footer": "Designed with precision • Built with elegance"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "toast": "Toast Examples",
+    "settings": "Settings"
+  },
+  "sections": {
+    "primaryAction": "Primary Action",
+    "secondaryAction": "Secondary Action",
+    "feature": "Feature",
+    "featureDescription": "Elegant transitions with smooth animations",
+    "style": "Style",
+    "styleDescription": "Refined typography with premium feel",
+    "design": "Design",
+    "designDescription": "Generous whitespace for clarity"
+  }
+}

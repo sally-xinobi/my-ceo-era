@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "データがありません",
+    "description": "最初のアイテムを作成して始めましょう。",
+    "create": "作成",
+    "footer": "精密に設計 • 優雅に構築"
+  },
+  "tabs": {
+    "overview": "概要",
+    "toast": "トースト例",
+    "settings": "設定"
+  },
+  "sections": {
+    "primaryAction": "プライマリアクション",
+    "secondaryAction": "セカンダリアクション",
+    "feature": "機能",
+    "featureDescription": "滑らかなアニメーションによるエレガントな遷移",
+    "style": "スタイル",
+    "styleDescription": "プレミアム感のある洗練されたタイポグラフィ",
+    "design": "デザイン",
+    "designDescription": "明瞭さのための余裕あるホワイトスペース"
+  }
+}

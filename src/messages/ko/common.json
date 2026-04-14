@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "title": "Next 앱 만들기",
+    "description": "create next app으로 생성됨"
+  },
+  "navigation": {
+    "home": "홈"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "settings": {
+    "themePreference": "테마 설정",
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템",
+    "lightDescription": "밝고 깨끗한 인터페이스",
+    "darkDescription": "밤에 눈의 피로가 적은 모드",
+    "systemDescription": "기본 설정을 따릅니다"
+  },
+  "toast": {
+    "title": "토스트 예제",
+    "success": "성공",
+    "error": "오류",
+    "info": "정보",
+    "warning": "경고",
+    "loading": "로딩 중...",
+    "copiedToClipboard": "클립보드에 복사됨",
+    "savedSuccessfully": "저장되었습니다",
+    "deletedSuccessfully": "삭제되었습니다",
+    "updatedSuccessfully": "업데이트되었습니다",
+    "somethingWentWrong": "문제가 발생했습니다",
+    "pleaseTryAgain": "다시 시도해주세요"
+  }
+}

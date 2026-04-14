@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-template-next-react
+spec:
+  template:
+    spec:
+      tolerations:
+        - key: karpenter.sh/capacity-type
+          operator: Equal
+          value: spot
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: karpenter.sh/capacity-type
+                    operator: In
+                    values:
+                      - spot
+      containers:
+        - name: project-template-next-react
+          env:
+            - name: STAGE
+              value: dev
+            - name: SENTRY_DSN
+              value: REPLACE_WITH_DEV_SENTRY_DSN
+            - name: SENTRY_ENVIRONMENT
+              value: dev
+            - name: SENTRY_TRACES_SAMPLE_RATE
+              value: "1.0"

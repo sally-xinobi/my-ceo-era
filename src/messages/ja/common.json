@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "title": "Next アプリ作成",
+    "description": "create next appで生成"
+  },
+  "navigation": {
+    "home": "ホーム"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "ko": "한국어",
+    "ja": "日本語"
+  },
+  "settings": {
+    "themePreference": "テーマ設定",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム",
+    "lightDescription": "明るくクリーンなインターフェース",
+    "darkDescription": "夜間に目に優しいモード",
+    "systemDescription": "デバイスの設定に従います"
+  },
+  "toast": {
+    "title": "トースト例",
+    "success": "成功",
+    "error": "エラー",
+    "info": "情報",
+    "warning": "警告",
+    "loading": "読み込み中...",
+    "copiedToClipboard": "クリップボードにコピーしました",
+    "savedSuccessfully": "保存しました",
+    "deletedSuccessfully": "削除しました",
+    "updatedSuccessfully": "更新しました",
+    "somethingWentWrong": "問題が発生しました",
+    "pleaseTryAgain": "もう一度お試しください"
+  }
+}

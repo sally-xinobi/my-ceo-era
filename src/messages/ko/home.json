@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "데이터가 없습니다",
+    "description": "첫 번째 항목을 만들어 시작하세요.",
+    "create": "만들기",
+    "footer": "정밀하게 설계 • 우아하게 구현"
+  },
+  "tabs": {
+    "overview": "개요",
+    "toast": "토스트 예제",
+    "settings": "설정"
+  },
+  "sections": {
+    "primaryAction": "기본 액션",
+    "secondaryAction": "보조 액션",
+    "feature": "기능",
+    "featureDescription": "부드러운 애니메이션과 우아한 전환",
+    "style": "스타일",
+    "styleDescription": "프리미엄 느낌의 정제된 타이포그래피",
+    "design": "디자인",
+    "designDescription": "명확함을 위한 넉넉한 여백"
+  }
+}

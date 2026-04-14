@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-template-next-react
+spec:
+  selector:
+    matchLabels:
+      app: project-template-next-react
+  template:
+    metadata:
+      labels:
+        app: project-template-next-react
+    spec:
+      containers:
+        - name: project-template-next-react
+          image: 913524933722.dkr.ecr.ap-northeast-1.amazonaws.com/xinobi-ai/project-template-next-react:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+          lifecycle:
+            preStop:
+              exec:
+                # Allow time for Istio to propagate endpoint removal to ingress gateway (7-15s typical).
+                # Increase if your mesh has many sidecars or slow control plane.
+                command: ["sleep", "15"]
+      # Includes preStop sleep. Must be > preStop + app shutdown time.
+      # Adjust app shutdown portion based on your drain needs (e.g. in-flight streaming),
+      # but keep total under 90s to allow buffer for Spot interruption handler overhead.
+      terminationGracePeriodSeconds: 60
