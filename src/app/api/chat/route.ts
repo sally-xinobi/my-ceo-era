@@ -1,9 +1,9 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GOOGLE_API_KEY,
 });
 
 export async function POST(req: Request) {
@@ -16,6 +16,7 @@ export async function POST(req: Request) {
     - Their Vibe (Brutal Honesty): ${persona.psychoanalysis}
     - The "OMG" Epiphany: ${persona.epiphanyMoment}
     - Business Idea: ${persona.businessTitle} (Niche: ${persona.niche})
+    - Billionaire Muse & Strategy: ${persona.billionaireMuse} - ${persona.museStrategy}
     - Step 1 (Product): ${persona.step1_product}
     - Step 2 (Marketing): ${persona.step2_marketing}
 
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
     Respond to the user's latest message. Challenge them to start making money out of their internet obsession today.`;
 
     const result = await generateText({
-      model: openai("gpt-4o"),
+      model: google("gemini-2.5-flash"),
       system: systemPrompt,
       messages: messages.map((m: { role: string; content: string }) => ({
         role: m.role,

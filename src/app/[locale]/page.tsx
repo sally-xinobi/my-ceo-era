@@ -7,7 +7,7 @@ import {
   MessageSquare,
   MousePointerClick,
   Send,
-  Sparkles,
+  Target,
   User,
   Zap,
 } from "lucide-react";
@@ -30,15 +30,14 @@ export default function CeoEraApp() {
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // OSINT 감성 강화 & 시간 지연 세팅
   const loadingSequence = [
     "Initializing OSINT Engine... 👁️",
     "Pinging TikTok endpoint... 📱",
     "Bypassing Reddit API blocks... 🕵️‍♀️",
     "Scanning GitHub repositories... 💻",
-    "Verifying Instagram/Snapchat footprint... 📸",
     "Aggregating cross-platform psychological profile... 🧠",
-    "Generating monetization vectors... 💸",
+    "Matching vibe with Billionaire Playbooks... 👑",
+    "Reverse-engineering mega-creator monetization... 💸",
     "Structuring your CEO blueprint... 🚀",
   ];
 
@@ -54,7 +53,7 @@ export default function CeoEraApp() {
       }, 800);
       return () => clearInterval(animationInterval);
     }
-  }, [step]); // removed loadingSequence to prevent deps cycle
+  }, [step]);
 
   const handleStart = async () => {
     if (!tiktokId.trim() || !tiktokId.startsWith("@")) {
@@ -74,13 +73,12 @@ export default function CeoEraApp() {
       const data = await response.json();
       setBlueprint(data);
 
-      // 애니메이션 싱크 맞추기
       setTimeout(() => {
         setStep("result");
         setMessages([
           {
             role: "assistant",
-            content: `Hey CEO! 💅 Just finished reading your digital footprint to filth. Your '${data.niche}' vibe is basically a goldmine. Let's gatekeep the 9-to-5 life and launch ${data.businessTitle}. What's stopping you from putting a link in bio right now?`,
+            content: `Hey CEO! 💅 Just finished reading your digital footprint to filth. Your '${data.niche}' vibe is basically a goldmine waiting to be tapped. Since we're using ${data.billionaireMuse}'s playbook, I need to know: what's the first digital product you can realistically ship this weekend?`,
           },
         ]);
       }, 6400);
@@ -174,7 +172,6 @@ export default function CeoEraApp() {
         }}
       ></div>
 
-      {/* Main Glassmorphism Container */}
       <div
         style={{
           width: "100%",
@@ -187,12 +184,11 @@ export default function CeoEraApp() {
           overflow: "hidden",
           position: "relative",
           zIndex: 10,
-          height: "700px",
+          height: "720px",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        {/* Step 1: Onboarding */}
         {step === "onboarding" && (
           <div
             style={{
@@ -221,7 +217,7 @@ export default function CeoEraApp() {
                   letterSpacing: "0.05em",
                 }}
               >
-                <Zap size={14} /> Stop scrolling. Start earning.
+                <Zap size={14} /> The Billionaire Playbook
               </div>
               <h1
                 style={{
@@ -246,9 +242,9 @@ export default function CeoEraApp() {
                   lineHeight: 1.5,
                 }}
               >
-                Drop your @handle. We'll scan your Reddit rants, TikTok
-                aesthetics, and Insta flexes to build a 6-figure business plan
-                that perfectly matches your chaotic vibe.
+                Drop your @handle. We scan your footprint and inject a
+                billionaire mega-creator's strategy (e.g., Kylie Jenner,
+                MrBeast) directly into your vibe.
               </p>
             </div>
 
@@ -293,7 +289,7 @@ export default function CeoEraApp() {
                 style={{
                   width: "100%",
                   padding: "20px",
-                  background: "linear-gradient(135deg, #a855f7, #6366f1)",
+                  background: "linear-gradient(135deg, #a855f7, #3b82f6)",
                   color: "white",
                   borderRadius: "20px",
                   fontWeight: 900,
@@ -314,13 +310,12 @@ export default function CeoEraApp() {
                   (e.currentTarget.style.transform = "scale(1)")
                 }
               >
-                Scan My Footprint <ArrowRight size={20} />
+                Steal Their Strategy <ArrowRight size={20} />
               </button>
             </div>
           </div>
         )}
 
-        {/* Step 2: OSINT Scanning UI */}
         {step === "analyzing" && (
           <div
             style={{
@@ -417,7 +412,6 @@ export default function CeoEraApp() {
           </div>
         )}
 
-        {/* Step 3: Reveal Result (Brutal Honesty / Epiphany) */}
         {step === "result" && blueprint && (
           <div
             style={{
@@ -466,7 +460,7 @@ export default function CeoEraApp() {
             <div
               style={{
                 backgroundColor: "rgba(30, 41, 59, 0.4)",
-                borderLeft: "4px solid #a855f7",
+                borderLeft: "4px solid #3b82f6",
                 padding: "16px 20px",
                 marginBottom: "24px",
                 borderRadius: "0 16px 16px 0",
@@ -498,11 +492,65 @@ export default function CeoEraApp() {
               </p>
             </div>
 
+            {/* The Billionaire Muse Highlight */}
+            <div
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1))",
+                border: "1px solid rgba(168, 85, 247, 0.4)",
+                borderRadius: "20px",
+                padding: "20px",
+                marginBottom: "24px",
+                boxShadow: "inset 0 0 20px rgba(168, 85, 247, 0.05)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: "#a855f7",
+                    padding: "6px",
+                    borderRadius: "50%",
+                    color: "white",
+                  }}
+                >
+                  <Target size={16} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 900,
+                    color: "#f8fafc",
+                    margin: 0,
+                  }}
+                >
+                  Stealing the Playbook from: {blueprint.billionaireMuse}
+                </h3>
+              </div>
+              <p
+                style={{
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  color: "#cbd5e1",
+                  margin: 0,
+                  lineHeight: 1.6,
+                }}
+              >
+                {blueprint.museStrategy}
+              </p>
+            </div>
+
             {/* Blueprint Card */}
             <div
               style={{
                 backgroundColor: "rgba(15, 23, 42, 0.8)",
-                border: "1px solid rgba(168, 85, 247, 0.3)",
+                border: "1px solid rgba(59, 130, 246, 0.3)",
                 borderRadius: "24px",
                 padding: "24px",
                 position: "relative",
@@ -515,7 +563,7 @@ export default function CeoEraApp() {
                   position: "absolute",
                   top: "-14px",
                   right: "20px",
-                  background: "linear-gradient(90deg, #a855f7, #3b82f6)",
+                  background: "#3b82f6",
                   color: "white",
                   padding: "6px 16px",
                   borderRadius: "999px",
@@ -526,7 +574,7 @@ export default function CeoEraApp() {
                   alignItems: "center",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
-                  boxShadow: "0 4px 10px rgba(168, 85, 247, 0.4)",
+                  boxShadow: "0 4px 10px rgba(59, 130, 246, 0.4)",
                 }}
               >
                 <DollarSign size={14} /> The Blueprint
@@ -545,7 +593,7 @@ export default function CeoEraApp() {
               </h3>
               <p
                 style={{
-                  color: "#a855f7",
+                  color: "#60a5fa",
                   fontWeight: 700,
                   margin: "0 0 20px 0",
                   fontSize: "0.9rem",
@@ -570,11 +618,11 @@ export default function CeoEraApp() {
                 >
                   <div
                     style={{
-                      backgroundColor: "rgba(168, 85, 247, 0.1)",
+                      backgroundColor: "rgba(59, 130, 246, 0.1)",
                       padding: "10px",
                       borderRadius: "14px",
-                      color: "#c084fc",
-                      border: "1px solid rgba(168, 85, 247, 0.2)",
+                      color: "#60a5fa",
+                      border: "1px solid rgba(59, 130, 246, 0.2)",
                     }}
                   >
                     <MousePointerClick size={20} />
@@ -611,11 +659,11 @@ export default function CeoEraApp() {
                 >
                   <div
                     style={{
-                      backgroundColor: "rgba(59, 130, 246, 0.1)",
+                      backgroundColor: "rgba(168, 85, 247, 0.1)",
                       padding: "10px",
                       borderRadius: "14px",
-                      color: "#60a5fa",
-                      border: "1px solid rgba(59, 130, 246, 0.2)",
+                      color: "#c084fc",
+                      border: "1px solid rgba(168, 85, 247, 0.2)",
                     }}
                   >
                     <Activity size={20} />
@@ -681,8 +729,8 @@ export default function CeoEraApp() {
                   (e.currentTarget.style.transform = "scale(1)")
                 }
               >
-                <MessageSquare size={20} fill="#0f172a" /> Chat with AI
-                Co-founder
+                <MessageSquare size={20} fill="#0f172a" /> Execute the{" "}
+                {blueprint.billionaireMuse} Playbook
               </button>
               <button
                 type="button"
@@ -699,7 +747,7 @@ export default function CeoEraApp() {
                   cursor: "pointer",
                 }}
               >
-                Nah, scan another profile
+                Scan another profile
               </button>
             </div>
           </div>

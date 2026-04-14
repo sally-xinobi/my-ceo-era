@@ -1,10 +1,10 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GOOGLE_API_KEY,
 });
 
 const fetchWithTimeout = async (
@@ -32,12 +32,12 @@ export async function POST(req: Request) {
     const { handle } = await req.json();
     const cleanHandle = handle.replace("@", "").trim();
 
-    const digitalFootprint: Record<string, any> = {
+    const digitalFootprint: Record<string, unknown> = {
       target_id: cleanHandle,
       platforms: {},
     };
 
-    // 1. TikTok Extraction
+    // --- OSINT EXTRACTION ---
     const getTikTok = async () => {
       try {
         const res = await fetchWithTimeout(
@@ -65,7 +65,6 @@ export async function POST(req: Request) {
       return { active: false };
     };
 
-    // 2. Reddit Extraction (To catch the "uncensored" vibe)
     const getReddit = async () => {
       try {
         const res = await fetchWithTimeout(
@@ -85,7 +84,6 @@ export async function POST(req: Request) {
       return { active: false };
     };
 
-    // 3. Instagram Presence
     const checkInsta = async () => {
       try {
         const res = await fetchWithTimeout(
@@ -104,60 +102,71 @@ export async function POST(req: Request) {
       checkInsta(),
     ]);
 
-    digitalFootprint.platforms.tiktok =
-      tiktokData.status === "fulfilled" ? tiktokData.value : { active: false };
-    digitalFootprint.platforms.reddit =
-      redditData.status === "fulfilled" ? redditData.value : { active: false };
-    digitalFootprint.platforms.instagram =
-      instaData.status === "fulfilled" ? instaData.value : { active: false };
+    digitalFootprint.platforms = {
+      tiktok:
+        tiktokData.status === "fulfilled"
+          ? tiktokData.value
+          : { active: false },
+      reddit:
+        redditData.status === "fulfilled"
+          ? redditData.value
+          : { active: false },
+      instagram:
+        instaData.status === "fulfilled" ? instaData.value : { active: false },
+    };
 
-    // --- AI PSYCHOANALYSIS & EMPATHY ENGINE ---
-    // 프롬프트 핵심: 단순히 사업 제안이 아니라 뼈 때리는 공감(Relatability)과 "이거 내 얘긴데?"라는 반응 유도.
+    // --- AI PSYCHOANALYSIS & BILLIONAIRE BLUEPRINT ENGINE ---
     const result = await generateObject({
-      model: openai("gpt-4o"),
+      model: google("gemini-2.5-flash"),
       schema: z.object({
         psychoanalysis: z
           .string()
           .describe(
-            "A brutally honest, highly empathetic 1-sentence read of their internet persona. E.g., 'You project a pristine 'that girl' aesthetic on Insta, but your Reddit history shows you're actually a stressed-out overthinker who loves cozy games.'",
+            "A brutally honest, highly empathetic 1-sentence read of their internet persona based on the data. E.g., 'You project a pristine aesthetic on Insta, but your Reddit history shows you're a stressed-out overthinker.'",
           ),
         epiphanyMoment: z
           .string()
           .describe(
-            "The 'OMG I need this' realization. Tell them exactly what pain point in their life this business solves. E.g., 'Stop complaining about corporate 9-to-5s. You already curate better Notion templates than your boss.'",
+            "The 'OMG I need this' realization. E.g., 'Stop complaining about your 9-to-5. You already curate better Notion templates than your boss.'",
           ),
         businessTitle: z
           .string()
-          .describe(
-            "A Gen-Z catchy product/business name. E.g., 'The Burnout Recovery OS (Notion)' or 'Unhinged Coping Mechanism Sticker Pack'",
-          ),
+          .describe("A Gen-Z catchy product/business name."),
         niche: z
           .string()
           .describe(
-            "Hyper-specific internet micro-niche (e.g., 'Corporate Goth', 'Cozy Doomscroller', 'Delusional Academic')",
+            "Hyper-specific internet micro-niche (e.g., 'Corporate Goth', 'Cozy Doomscroller')",
+          ),
+        billionaireMuse: z
+          .string()
+          .describe(
+            "The name of the celebrity/billionaire whose playbook you are applying (e.g., 'Kylie Jenner', 'MrBeast', 'Emma Chamberlain', 'Naval').",
+          ),
+        museStrategy: z
+          .string()
+          .describe(
+            "The exact strategy stolen from that muse. E.g., 'Applying Kylie Jenner's lip-kit scarcity model: we are going to hype up this digital product for 3 weeks on TikTok, then release only 100 copies to create insane FOMO.'",
           ),
         step1_product: z
           .string()
           .describe(
-            "Exactly what to build first. Low effort, high aesthetic value. E.g., 'Bundle your actual ADHD study playlists into a $5 Spotify/Gumroad link.'",
+            "Exactly what digital product to build first. Low effort, high aesthetic value.",
           ),
         step2_marketing: z
           .string()
           .describe(
-            "How to sell it using their exact vibe. E.g., 'Post a 7-second POV TikTok complaining about midterms with the playlist in bio. Do NOT try to look professional.'",
+            "How to market it using their exact vibe and the Muse's strategy.",
           ),
       }),
       prompt: `You are a Palantir-level OSINT analyst and a world-class Gen Z brand strategist.
       Analyze this multi-platform raw data extracted for the target ID "${cleanHandle}":
-      
-      OSINT Data:
       ${JSON.stringify(digitalFootprint, null, 2)}
       
-      CRITICAL INSTRUCTIONS FOR MAXIMUM EMPATHY:
-      1. READ THEM TO FILTH: Synthesize the data. If they have high Reddit karma but no TikTok bio, they are a lurker with strong opinions. If they have Insta and TikTok, they care about image. 
-      2. If all data is blank, psychoanalyze the username "${cleanHandle}". What kind of teenager chooses that handle? Are they an e-girl? A gym bro? A quiet nerd?
-      3. The business idea MUST NOT BE GENERIC (No 'dropshipping' or 'social media agency'). It must be a weird, hyper-specific digital product (templates, lists, aesthetics, micro-guides, discord servers) that turns their personal flaws/obsessions into money.
-      4. The tone must be a mix of a best friend hyping them up, and a brutal reality check. Use internet slang naturally (e.g., 'bestie', 'era', 'delulu', 'gatekeeping'). Make them say "OMG this AI knows me better than my therapist."`,
+      CRITICAL INSTRUCTIONS:
+      1. READ THEM TO FILTH: Synthesize their data/username to guess their exact internet archetype.
+      2. THE BILLIONAIRE PLAYBOOK: Once you figure out their niche (Beauty, Gaming, Tech, Aesthetic Lifestyle, etc.), pick a famous Billionaire or Mega-Creator who dominates that space (e.g., Kylie Jenner for beauty, MrBeast for viral hooks, Emma Chamberlain for relatable coffee/lifestyle, Naval for tech philosophy).
+      3. Explain EXACTLY how you are taking that mega-creator's specific success secret (e.g., 'manufactured scarcity', 'retention editing', 'vulnerable oversharing') and injecting it into the user's tiny digital business.
+      4. Tone: Brutal reality check mixed with hype-man energy. Use Gen Z slang ('delulu', 'era', 'gatekeeping'). Make them say "OMG this AI knows me better than my therapist, AND is giving me a billionaire's playbook."`,
     });
 
     return NextResponse.json(result.object);
