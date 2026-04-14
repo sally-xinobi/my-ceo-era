@@ -1,4 +1,4 @@
-# Project: Next.js React Template
+# Project: CEO ERA
 
 <!-- Project Summary -->
 

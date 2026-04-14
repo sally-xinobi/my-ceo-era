@@ -1,4 +1,4 @@
-# Next-React-Project-Template
+# ceo-era
 
 Production-ready Next.js template with TypeScript, Tailwind CSS, i18n, and container support.
 
