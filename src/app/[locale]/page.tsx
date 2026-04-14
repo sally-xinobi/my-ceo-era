@@ -88,7 +88,8 @@ export default function CeoEraApp() {
         setMessages([
           {
             role: "assistant",
-            content: `Hey CEO! 💅 I already did the hard work. I found your niche, wrote your landing page headline, and even scripted your first TikTok hook for ${data.businessName}. Are you ready to actually launch this weekend? What's holding you back?`,
+            content:
+              "yo I just dug through your whole online presence and built you a full business plan lol. check it out and lmk what you think 👀",
           },
         ]);
       }, 6300);
@@ -115,7 +116,6 @@ export default function CeoEraApp() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
-          persona: blueprint,
         }),
       });
 
@@ -821,7 +821,7 @@ export default function CeoEraApp() {
           </div>
         )}
 
-        {/* Step 4: iMessage Style AI Chat (FounderPal CMO) */}
+        {/* Step 4: iMessage Style AI Chat (FAM) */}
         {step === "chat" && (
           <div
             style={{
@@ -888,7 +888,7 @@ export default function CeoEraApp() {
                       letterSpacing: "-0.02em",
                     }}
                   >
-                    FounderPal
+                    FAM
                   </h3>
                   <p
                     style={{
@@ -898,7 +898,7 @@ export default function CeoEraApp() {
                       fontWeight: 600,
                     }}
                   >
-                    Your AI Co-founder
+                    Your Best Friend
                   </p>
                 </div>
               </div>
@@ -1030,7 +1030,7 @@ export default function CeoEraApp() {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                placeholder="Message your Co-founder..."
+                placeholder="Message FAM..."
                 style={{
                   flex: 1,
                   padding: "14px 20px",
