@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: project-template-next-react
+  name: ceo-era
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: dev-project-template-next-react.xinobi.net
+    external-dns.alpha.kubernetes.io/hostname: dev-ceo-era.xinobi.net
 spec:
   rules:
-    - host: dev-project-template-next-react.xinobi.net
+    - host: dev-ceo-era.xinobi.net
       http:
         paths:
           - path: /

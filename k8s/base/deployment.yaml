@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   selector:
     matchLabels:
-      app: project-template-next-react
+      app: ceo-era
   template:
     metadata:
       labels:
-        app: project-template-next-react
+        app: ceo-era
     spec:
       containers:
-        - name: project-template-next-react
-          image: 913524933722.dkr.ecr.ap-northeast-1.amazonaws.com/xinobi-ai/project-template-next-react:latest
+        - name: ceo-era
+          image: ceo-era:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   hosts:
-    - dev-project-template-next-react.xinobi.net
+    - dev-ceo-era.xinobi.net

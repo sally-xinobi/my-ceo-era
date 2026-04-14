@@ -1,13 +1,13 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   gateways:
     - public-gateway
   http:
     - route:
         - destination:
-            host: project-template-next-react
+            host: ceo-era
             port:
               number: 80

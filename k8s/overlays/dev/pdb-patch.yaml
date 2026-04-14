@@ -1,6 +1,6 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   minAvailable: 0

@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   template:
     spec:
       containers:
-        - name: project-template-next-react
+        - name: ceo-era
           env:
             - name: STAGE
               value: prod

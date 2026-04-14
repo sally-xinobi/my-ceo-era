@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   template:
     spec:
@@ -21,7 +21,7 @@ spec:
                     values:
                       - spot
       containers:
-        - name: project-template-next-react
+        - name: ceo-era
           env:
             - name: STAGE
               value: dev

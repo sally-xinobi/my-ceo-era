@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: project-template-next-react
+  name: ceo-era
 spec:
   selector:
-    app: project-template-next-react
+    app: ceo-era
   ports:
     - port: 80
       targetPort: 3000
