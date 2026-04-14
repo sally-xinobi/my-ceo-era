@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const result = await generateText({
       model: openai("gpt-4o"),
       system: systemPrompt,
-      messages: messages.map((m: any) => ({
+      messages: messages.map((m: { role: string; content: string }) => ({
         role: m.role,
         content: m.content,
       })),

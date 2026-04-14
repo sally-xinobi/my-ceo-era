@@ -20,7 +20,9 @@ export default function CeoEraApp() {
   const [tiktokId, setTiktokId] = useState("");
   const [loadingText, setLoadingText] = useState("");
   const [progress, setProgress] = useState(0);
-  const [blueprint, setBlueprint] = useState<any>(null);
+  const [blueprint, setBlueprint] = useState<Record<string, string> | null>(
+    null,
+  );
 
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
     [],
