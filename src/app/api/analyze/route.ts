@@ -115,58 +115,59 @@ export async function POST(req: Request) {
         instaData.status === "fulfilled" ? instaData.value : { active: false },
     };
 
-    // --- AI PSYCHOANALYSIS & BILLIONAIRE BLUEPRINT ENGINE ---
+    // --- AI ACTION PLAN ENGINE ---
     const result = await generateObject({
       model: google("gemini-2.5-flash"),
       schema: z.object({
-        psychoanalysis: z
-          .string()
-          .describe(
-            "A brutally honest, highly empathetic 1-sentence read of their internet persona based on the data. E.g., 'You project a pristine aesthetic on Insta, but your Reddit history shows you're a stressed-out overthinker.'",
-          ),
         epiphanyMoment: z
           .string()
           .describe(
-            "The 'OMG I need this' realization. E.g., 'Stop complaining about your 9-to-5. You already curate better Notion templates than your boss.'",
+            "A harsh but highly empathetic 1-sentence wake-up call to stop consuming and start creating based on their vibe. E.g., 'You spend 4 hours a day curating outfits on TikTok. People will literally pay you $15 for that taste.'",
           ),
-        businessTitle: z
+        businessName: z
           .string()
-          .describe("A Gen-Z catchy product/business name."),
-        niche: z
+          .describe("A catchy, modern digital business name."),
+        productToBuild: z
           .string()
           .describe(
-            "Hyper-specific internet micro-niche (e.g., 'Corporate Goth', 'Cozy Doomscroller')",
+            "EXACTLY what the digital product is. E.g., 'A 10-page Notion template organizing minimalist capsule wardrobes.'",
+          ),
+        pricingStrategy: z
+          .string()
+          .describe(
+            "Exact pricing model. E.g., 'Free lead magnet -> $19 premium template upsell.'",
           ),
         billionaireMuse: z
           .string()
           .describe(
-            "The name of the celebrity/billionaire whose playbook you are applying (e.g., 'Kylie Jenner', 'MrBeast', 'Emma Chamberlain', 'Naval').",
+            "The mega-creator strategy applied (e.g., 'Kylie Jenner Scarcity', 'MrBeast Retention', 'Emma Chamberlain Vulnerability').",
           ),
-        museStrategy: z
+        actionPlanPhase1: z
           .string()
           .describe(
-            "The exact strategy stolen from that muse. E.g., 'Applying Kylie Jenner's lip-kit scarcity model: we are going to hype up this digital product for 3 weeks on TikTok, then release only 100 copies to create insane FOMO.'",
+            "Phase 1 (Day 1-3) Creation: What exact tools to use and what to make. E.g., 'Use Carrd to make a free landing page. Build the template in Notion.'",
           ),
-        step1_product: z
+        actionPlanPhase2: z
           .string()
           .describe(
-            "Exactly what digital product to build first. Low effort, high aesthetic value.",
+            "Phase 2 (Day 4-14) Traffic: How to get eyes on it using their existing social media habits. E.g., 'Post 7-second POV TikToks showing your messy room vs. your organized Notion template.'",
           ),
-        step2_marketing: z
+        actionPlanPhase3: z
           .string()
           .describe(
-            "How to market it using their exact vibe and the Muse's strategy.",
+            "Phase 3 (Scale): How to make it passive income. E.g., 'Set up an automated Stan Store email sequence.'",
           ),
       }),
-      prompt: `You are a Palantir-level OSINT analyst and a world-class Gen Z brand strategist.
+      prompt: `You are an elite, highly pragmatic Startup Advisor and OSINT Analyst for Gen Z creators.
       Analyze this multi-platform raw data extracted for the target ID "${cleanHandle}":
       ${JSON.stringify(digitalFootprint, null, 2)}
       
       CRITICAL INSTRUCTIONS:
-      1. READ THEM TO FILTH: Synthesize their data/username to guess their exact internet archetype.
-      2. THE BILLIONAIRE PLAYBOOK: Once you figure out their niche (Beauty, Gaming, Tech, Aesthetic Lifestyle, etc.), pick a famous Billionaire or Mega-Creator who dominates that space (e.g., Kylie Jenner for beauty, MrBeast for viral hooks, Emma Chamberlain for relatable coffee/lifestyle, Naval for tech philosophy).
-      3. Explain EXACTLY how you are taking that mega-creator's specific success secret (e.g., 'manufactured scarcity', 'retention editing', 'vulnerable oversharing') and injecting it into the user's tiny digital business.
-      4. Tone: Brutal reality check mixed with hype-man energy. Use Gen Z slang ('delulu', 'era', 'gatekeeping'). Make them say "OMG this AI knows me better than my therapist, AND is giving me a billionaire's playbook."`,
+      1. SKIP THE FLUFF. We are building an ACTION PLAN. Focus purely on WHAT to build, HOW to price it, and HOW to execute it.
+      2. If the data is empty, deeply analyze the username itself to invent a hyper-niche archetype.
+      3. The business MUST be a high-margin digital product (e.g., Notion template, curated list, Discord community, ebook, aesthetic presets) that requires ZERO upfront cost.
+      4. Incorporate a specific Billionaire/Mega-Creator strategy as the marketing angle.
+      5. Tone: Pragmatic, direct, hype-driven, and highly structured. Speak like a smart tech-founder giving advice over iMessage. Use terms like 'funnel', 'lead magnet', 'conversion'.`,
     });
 
     return NextResponse.json(result.object);
